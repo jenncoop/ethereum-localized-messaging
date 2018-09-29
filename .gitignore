@@ -4,6 +4,7 @@ logs
 
 # Directories used by tools like mocha & istanbul
 coverage
+coverageEnv
 shippable
 
 # Dependency directory
