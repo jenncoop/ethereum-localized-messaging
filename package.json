@@ -1,6 +1,6 @@
 {
   "name": "ethereum-localized-messaging",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A method of converting machine codes to human-readable text in any language and phrasing.",
   "keywords": [
     "ethereum",
