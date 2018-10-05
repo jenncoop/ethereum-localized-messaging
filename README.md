@@ -23,20 +23,20 @@ pragma solidity ^0.4.25;
 import "/ethereum-localized-messaging/contracts/Localization.sol";
 
 contract PirateLocalization is Localization {
-  constructor() public {
-    set(hex"00", "Nay!");
-    set(hex"01", "Aye!");
-    set(hex"02", "Arr jolly crew have begun");
-    set(hex"03", "Awaitin'");
-    set(hex"04", "Ye need ta do something");
-    set(hex"05", "Has walked thar plank an expired");
-    set(hex"0F", "Only this here metadata");
-    set(hex"10", "Ye can nay do that");
-    set(hex"11", "Ye be permitted");
-    set(hex"12", "Ye have requested thar go ahead");
-    set(hex"13", "Yer waitin' fer the go ahead");
-    set(hex"14", "Thar awaiting yer signal");
-  }
+    constructor() public {
+        set(hex"00", "Nay!");
+        set(hex"01", "Aye!");
+        set(hex"02", "Arr jolly crew have begun");
+        set(hex"03", "Awaitin'");
+        set(hex"04", "Ye need ta do something");
+        set(hex"05", "Has walked thar plank an expired");
+        set(hex"0F", "Only this here metadata");
+        set(hex"10", "Ye can nay do that");
+        set(hex"11", "Ye be permitted");
+        set(hex"12", "Ye have requested thar go ahead");
+        set(hex"13", "Yer waitin' fer the go ahead");
+        set(hex"14", "Thar awaiting yer signal");
+    }
 }
 ```
 
