@@ -14,7 +14,7 @@ contract("LocalizationPreferencesTests", async (accounts) => {
   });
 
   it("uses the default localization when none has been set", async () => {
-    const result = await localizationPreferencesInstance.get(web3.utils.toHex("0x01"), {from: accounts[3]});
+    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"), {from: accounts[3]});
     expect(result).to.eql({"0": true, "1": "Success"});
   });
 
@@ -28,8 +28,8 @@ contract("LocalizationPreferencesTests", async (accounts) => {
       await localizationPreferencesInstance.set(frenchLocalizationInstance.address);
     });
 
-    it("gets text for a given code", async () => {
-      const result = await localizationPreferencesInstance.get(web3.utils.toHex("0x01"));
+    it("textFors text for a given code", async () => {
+      const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"));
 
       expect(result).to.eql({"0": true, "1": "Succès"});
     });
@@ -39,14 +39,14 @@ contract("LocalizationPreferencesTests", async (accounts) => {
       await spanishLocalizationInstance.set(web3.utils.toHex("0x01"), "Éxito");
       await localizationPreferencesInstance.set(spanishLocalizationInstance.address);
 
-      const result = await localizationPreferencesInstance.get(web3.utils.toHex("0x01"));
+      const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"));
 
       expect(result).to.eql({"0": true, "1": "Éxito"});
     });
   });
 
   it("returns false and an empty string if no code matches any localizations", async () => {
-    const result = await localizationPreferencesInstance.get(web3.utils.toHex("0x12"));
+    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x12"));
 
     expect(result).to.eql({"0": false, "1": ""});
   });
@@ -57,7 +57,7 @@ contract("LocalizationPreferencesTests", async (accounts) => {
 
     await localizationPreferencesInstance.set(spanishLocalizationInstance.address);
 
-    const result = await localizationPreferencesInstance.get(web3.utils.toHex("0x00"));
+    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x00"));
 
     expect(result).to.eql({"0": false, "1": "Failure"});
   });
