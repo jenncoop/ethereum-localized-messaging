@@ -70,6 +70,6 @@ contract MyContract {
 
 ### Quick Start
 
-2. `npm install`
-3. `truffle compile`
-4. `npm run coverage`
+1. `npm install`
+2. `truffle compile`
+3. `npm run coverage`
