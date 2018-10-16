@@ -1,6 +1,7 @@
 # Ethereum Localized Messaging
 
 [![Build Status Badge](https://travis-ci.org/jenncoop/ethereum-localized-messaging.svg?branch=master)](https://travis-ci.org/jenncoop/ethereum-localized-messaging.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/jenncoop/ethereum-localized-messaging/badge.svg?branch=master)](https://coveralls.io/github/jenncoop/ethereum-localized-messaging?branch=master)
+[![ERC1444](https://img.shields.io/badge/ERC-1444-414.svg)](https://github.com/ethereum/EIPs/blob/56f86922bbd3777174cdbf2e0d01d38c6306b9c0/EIPS/eip-1444.md)
 
 A method of converting machine codes to human-readable text in any language and phrasing.
 
