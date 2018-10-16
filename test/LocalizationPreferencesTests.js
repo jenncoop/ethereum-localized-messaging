@@ -1,64 +1,54 @@
-var LocalizationPreferences = artifacts.require("./LocalizationPreferences.sol");
-var Localization = artifacts.require("./Localization.sol");
+var LocalizationPreferences = artifacts.require('LocalizationPreferences.sol');
+var PirateLocalization = artifacts.require('PirateLocalization.sol');
+var SpanishLocalization = artifacts.require('SpanishLocalization.sol');
 
-contract("LocalizationPreferencesTests", async (accounts) => {
-  let defaultLocalizationInstance;
-  let localizationPreferencesInstance;
+contract('LocalizationPreferencesTests', async (accounts) => {
+  let defaultLocalization;
+  let spanishLocalization;
+  let localizationPreferences;
 
-  before("setup", async () => {
-    defaultLocalizationInstance = await Localization.new();
-    await defaultLocalizationInstance.set(web3.utils.toHex("0x01"), "Success");
-    await defaultLocalizationInstance.set(web3.utils.toHex("0x00"), "Failure");
-
-    localizationPreferencesInstance = await LocalizationPreferences.new(defaultLocalizationInstance.address);
+  before('setup', async () => {
+    defaultLocalization = await PirateLocalization.new();
+    spanishLocalization = await SpanishLocalization.new();
+    localizationPreferences = await LocalizationPreferences.new(defaultLocalization.address);
   });
 
-  it("uses the default localization when none has been set", async () => {
-    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"), {from: accounts[3]});
-    expect(result).to.eql({"0": true, "1": "Success"});
-  });
+  describe('#set', async () => {
+    it('sets a localization for a user', async () => {
+      await localizationPreferences.set(spanishLocalization.address);
+      const result = await localizationPreferences.get(web3.utils.toHex('0x02'), accounts[0]);
 
-  context("with a localization already set", async () => {
-    let frenchLocalizationInstance;
-
-    before("create and set localization", async () => {
-      frenchLocalizationInstance = await Localization.new();
-      await frenchLocalizationInstance.set(web3.utils.toHex("0x01"), "Succès");
-      await frenchLocalizationInstance.set(web3.utils.toHex("0x00"), "Échec");
-      await localizationPreferencesInstance.set(frenchLocalizationInstance.address);
-    });
-
-    it("textFors text for a given code", async () => {
-      const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"));
-
-      expect(result).to.eql({"0": true, "1": "Succès"});
-    });
-
-    it("sets a new localization", async () => {
-      let spanishLocalizationInstance = await Localization.new();
-      await spanishLocalizationInstance.set(web3.utils.toHex("0x01"), "Éxito");
-      await localizationPreferencesInstance.set(spanishLocalizationInstance.address);
-
-      const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x01"));
-
-      expect(result).to.eql({"0": true, "1": "Éxito"});
+      expect(result).to.eql({'0': true, '1': 'Aceptado/Iniciado'});
     });
   });
 
-  it("returns false and an empty string if no code matches any localizations", async () => {
-    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x12"));
+  describe('#textFor', async () => {
+    it('uses the default localization when none has been set', async () => {
+      const result = await localizationPreferences.textFor(web3.utils.toHex('0x02'), {from: accounts[3]});
 
-    expect(result).to.eql({"0": false, "1": ""});
-  });
+      expect(result).to.eql({'0': true, '1': 'Arr jolly crew have begun'});
+    });
 
-  it("falls back to the default localization", async () => {
-    spanishLocalizationInstance = await Localization.new();
-    await spanishLocalizationInstance.set(web3.utils.toHex("0x01"), "Éxito");
+    context('with a localization already set', async () => {
+      it('gets text for a given code', async () => {
+        await localizationPreferences.set(spanishLocalization.address);
+        const result = await localizationPreferences.textFor(web3.utils.toHex('0x01'));
 
-    await localizationPreferencesInstance.set(spanishLocalizationInstance.address);
+        expect(result).to.eql({'0': true, '1': 'Éxito'});
+      });
+    });
 
-    const result = await localizationPreferencesInstance.textFor(web3.utils.toHex("0x00"));
+    it('returns false and an empty string if no code matches any localizations', async () => {
+      const result = await localizationPreferences.textFor(web3.utils.toHex('0x12'));
 
-    expect(result).to.eql({"0": false, "1": "Failure"});
+      expect(result).to.eql({'0': false, '1': ''});
+    });
+
+    it('falls back to the default localization', async () => {
+      await localizationPreferences.set(spanishLocalization.address);
+      const result = await localizationPreferences.textFor(web3.utils.toHex('0x05'));
+
+      expect(result).to.eql({'0': false, '1': 'Has walked thar plank an expired'});
+    });
   });
 });

@@ -1,24 +1,16 @@
-var Localization = artifacts.require("./Localization.sol");
+var PirateLocalization = artifacts.require("PirateLocalization.sol");
 
 contract("LocalizationTests", async (accounts) => {
   let localizationInstance;
 
   before("setup", async () => {
-    localizationInstance = await Localization.new();
-    await localizationInstance.set(web3.utils.toHex("0x01"), "Success");
+    localizationInstance = await PirateLocalization.new();
   });
 
-  it("gets text for a given code", async () => {
-    const result = await localizationInstance.textFor(web3.utils.toHex("0x01"));
-
-    expect(result).to.equal("Success");
-  });
-
-  it("sets text for a given code", async () => {
-    await localizationInstance.set(web3.utils.toHex("0x00"), "Failure");
-
-    const result = await localizationInstance.textFor(web3.utils.toHex("0x00"));
-
-    expect(result).to.equal("Failure");
+  describe("#get", async () => {
+    it("gets text for a given code", async () => {
+      const result = await localizationInstance.textFor(web3.utils.toHex("0x01"));
+      expect(result).to.equal("Aye!");
+    });
   });
 });
