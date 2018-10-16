@@ -68,9 +68,8 @@ contract MyContract {
 * NodeJS, v10.11.0 or higher
 * Truffle, v5.0.0-beta.0
 
-### Installation
+### Quick Start
 
-1. Clone the repo
 2. `npm install`
 3. `truffle compile`
 4. `npm run coverage`
