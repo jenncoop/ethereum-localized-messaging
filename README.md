@@ -73,5 +73,4 @@ contract MyContract {
 1. Clone the repo
 2. `npm install`
 3. `truffle compile`
-4. `truffle migrate`
 4. `npm run coverage`
