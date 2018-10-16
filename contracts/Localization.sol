@@ -7,10 +7,9 @@ contract Localization {
     constructor() public {}
 
     /// @notice Sets a mapping of a code to its text representation
-    /// @dev Currently overwrites a code to text representation mapping if it already exists
     /// @param _code The code with which to associate the text
     /// @param _message The text representation
-    function set(bytes32 _code, string _message) public {
+    function set(bytes32 _code, string _message) internal {
         dictionary_[_code] = _message;
     }
 
